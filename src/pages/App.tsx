@@ -43,7 +43,11 @@ function App(): JSX.Element {
 
   return (
     <Box className="App FullPageBox">
+      {settings.isLoading ? (
+        <LoadingPage />
+      ) : (
         <AuthPage />
+      )}
     </Box>
   );
 }
