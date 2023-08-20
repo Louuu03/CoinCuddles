@@ -20,9 +20,13 @@ function HomePage(): JSX.Element {
 
   return (
     <Box className="FullPageBox">
+      {!!userInfos.coupleId ? (
         <Box className="HomePage">
           <Box className="Display"></Box>
         </Box>
+      ) : (
+        <FirstStepPage />
+      )}
     </Box>
   );
 }

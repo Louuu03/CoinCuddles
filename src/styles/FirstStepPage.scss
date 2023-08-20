@@ -1,0 +1,64 @@
+@import './colors';
+
+.FirstStepPage {
+  background-color: $background-color;
+  font-family: 'Roboto Slab', serif;
+  padding-bottom: 40px;
+
+  .Main {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 15%;
+    text-align: center;
+
+    h1 {
+      color: $primary-yellow;
+      font-family: 'Permanent Marker', cursive;
+      font-size: 40px;
+      margin-bottom: 5px;
+    }
+
+    .Display {
+      .InputField {
+        display: flex;
+        flex-direction: row;
+
+        .input{
+            width: calc(100% - 40px);
+        }
+
+        .NextBtn{
+            width: 35px;
+            height: 35px;
+            min-width: 0;
+            padding: 0;
+            background-color: $secondary-purple;
+            border-radius: 50%;
+            color: white;
+            margin-left: 5px;
+            margin-top: 12px;
+
+            &:hover{
+                background-color: $transparent-purple;
+                color:  $secondary-purple;
+
+            }
+        }
+      }
+      h2 {
+        font-size: 20px;
+      }
+      .CreateBtn{
+        background-color: $primary-blue;
+        color: white;
+        padding: 10px 10px;
+        font-weight: 600;
+
+        &:hover{
+            background-color: $primary-yellow;
+        }
+      }
+    }
+  }
+}
