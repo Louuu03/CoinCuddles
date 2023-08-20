@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import AuthPage from './AuthPage';
+import HomePage from './HomePage';
 import { Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserInfos } from '../redux/reducers/userSlice';
+import LoadingPage from './LoadingPage';
 import { setSettings } from '../redux/reducers/settingsSlice';
 
 function App(): JSX.Element {
@@ -45,6 +47,8 @@ function App(): JSX.Element {
     <Box className="App FullPageBox">
       {settings.isLoading ? (
         <LoadingPage />
+      ) : userInfos.user && userInfos.id ? (
+        <HomePage />
       ) : (
         <AuthPage />
       )}
