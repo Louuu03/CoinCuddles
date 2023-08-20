@@ -1,0 +1,44 @@
+@import './colors';
+
+.AuthPage {
+  &.FullPageBox {
+    flex-direction: column;
+    background-color: $background-color;
+
+    .Title {
+      flex-direction: row;
+      display: flex;
+      position: relative;
+
+      h1 {
+        color: $primary-yellow;
+        font-family: 'Permanent Marker', cursive;
+        font-size: 40px;
+        margin-bottom: 5px;
+      }
+    }
+
+    .InputField {
+      width: 325px;
+      padding: 20px;
+      background-color: $transparent-pink;
+      border-radius: 20px;
+
+      .InputComponents {
+        padding-top: 10px;
+
+        .InputArea {
+          margin: 10px 0;
+          width: 100%;
+        }
+      }
+      .SubmitBtn {
+        background-color: $primary-blue;
+        margin-top: 10px;
+        width: 150px;
+        color: white;
+        float: right;
+      }
+    }
+  }
+}
