@@ -86,7 +86,7 @@ function FirstStepPage(): JSX.Element {
       {
         coupleId: coupleId,
         name: userInfos.user + "'s Normal account",
-        owner: userInfos.id,
+        owner: null,
         currentValue: 0,
         date: Date.now(),
         isGoal: false,
@@ -108,22 +108,176 @@ function FirstStepPage(): JSX.Element {
       {
         coupleId: coupleId,
         name: userInfos.user + "'s Goal account",
-        owner: userInfos.id,
+        owner: null,
         currentValue: 0,
         date: Date.now(),
         isGoal: true,
         isPrivate: false,
         startValue: 0,
-        type: 1,
+        type: 5,
       },
     ];
     let err = false;
-    console.log('huu');
-
     for (let idx = 0; idx < accountUUIDs.length && !err; idx++) {
       const id = accountUUIDs[idx];
       try {
         await setDoc(doc(db, 'accounts', id), accounts[idx]);
+      } catch (error) {
+        setToast(2);
+        err = true;
+      }
+    }
+    return !err;
+  }
+
+  async function addCategories(coupleId: string) {
+    const categoryUUIDs = [
+      uuidv4(),
+      uuidv4(),
+      uuidv4(),
+      uuidv4(),
+      uuidv4(),
+      uuidv4(),
+      uuidv4(),
+      uuidv4(),
+      uuidv4(),
+    ];
+    const categories = [
+      {
+        coupleId: coupleId,
+        name: 'General',
+        owner: null,
+        currentValue: 0,
+        isPrivate: false,
+        parentId: 0,
+        id: categoryUUIDs[0],
+      },
+      {
+        coupleId: coupleId,
+        name: 'Food',
+        owner: null,
+        currentValue: 0,
+        isPrivate: false,
+        id: categoryUUIDs[1],
+        parentId: 0,
+      },
+      {
+        coupleId: coupleId,
+        name: 'Transport',
+        owner: null,
+        currentValue: 0,
+        isPrivate: false,
+        id: categoryUUIDs[2],
+        parentId: 0,
+      },
+      {
+        coupleId: coupleId,
+        name: 'Finance',
+        owner: null,
+        currentValue: 0,
+        isPrivate: false,
+        id: categoryUUIDs[3],
+        parentId: 0,
+      },
+      {
+        coupleId: coupleId,
+        name: 'Travel',
+        owner: null,
+        currentValue: 0,
+        isPrivate: false,
+        parentId: 0,
+        id: categoryUUIDs[4],
+      },
+      {
+        coupleId: coupleId,
+        name: 'Utilities',
+        owner: null,
+        currentValue: 0,
+        isPrivate: false,
+        id: categoryUUIDs[5],
+        parentId: 0,
+      },
+      {
+        coupleId: coupleId,
+        name: 'Shopping',
+        owner: null,
+        currentValue: 0,
+        id: categoryUUIDs[6],
+        isPrivate: false,
+        parentId: 0,
+      },
+      {
+        coupleId: coupleId,
+        name: 'Personal',
+        owner: null,
+        currentValue: 0,
+        id: categoryUUIDs[7],
+        isPrivate: false,
+        parentId: 0,
+      },
+      {
+        coupleId: coupleId,
+        name: 'Private',
+        owner: userInfos.id,
+        currentValue: 0,
+        isPrivate: true,
+        id: categoryUUIDs[8],
+        parentId: 0,
+      },
+      {
+        coupleId: coupleId,
+        name: 'Dine Out',
+        owner: null,
+        currentValue: 0,
+        isPrivate: false,
+        parentId: categoryUUIDs[1],
+      },
+      {
+        coupleId: coupleId,
+        name: 'Breakfast',
+        owner: null,
+        currentValue: 0,
+        isPrivate: false,
+        parentId: categoryUUIDs[1],
+      },
+      {
+        coupleId: coupleId,
+        name: 'Lunch',
+        owner: null,
+        currentValue: 0,
+        isPrivate: false,
+        parentId: categoryUUIDs[1],
+      },
+      {
+        coupleId: coupleId,
+        name: 'Dinner',
+        owner: null,
+        currentValue: 0,
+        isPrivate: false,
+        parentId: categoryUUIDs[1],
+      },
+      {
+        coupleId: coupleId,
+        name: 'Clothes',
+        owner: null,
+        currentValue: 0,
+        isPrivate: false,
+        parentId: categoryUUIDs[6],
+      },
+      {
+        coupleId: coupleId,
+        name: 'Hobbies',
+        owner: null,
+        currentValue: 0,
+        isPrivate: false,
+        parentId: 7,
+      },
+    ];
+    let err = false;
+    for (let idx = 0; idx < categories.length && !err; idx++) {
+      const id = categoryUUIDs[idx] || uuidv4();
+      try {
+        await setDoc(doc(db, 'categories', id), categories[idx]);
       } catch (error) {
         setToast(2);
         err = true;
@@ -137,24 +291,29 @@ function FirstStepPage(): JSX.Element {
     const coupleId = uuidv4();
 
     //add data
-    (await addAccounts(coupleId)) &&
-      updateDoc(doc(db, 'users', userInfos.id), {
+    try {
+      await addAccounts(coupleId);
+      await addCategories(coupleId);
+
+      await updateDoc(doc(db, 'users', userInfos.id), {
         coupleId: coupleId,
-      })
-        .then(() =>
-          setDoc(doc(db, 'couples', coupleId), {
-            members: [userInfos.id, null],
-            currency: 'twd',
-          }).then(() => {
-            setToast(1);
-            setTimeout(() => {
-              setUser(userInfos.user, userInfos.id, coupleId, 1);
-              dispatch(setSettings({ ...settings, isLoading: true }));
-              navigate('/Home');
-            }, 1250);
-          }),
-        )
-        .catch(() => setToast(2));
+      });
+
+      await setDoc(doc(db, 'couples', coupleId), {
+        members: [userInfos.id, null],
+        currency: 'twd',
+      });
+
+      setToast(1);
+
+      setTimeout(() => {
+        setUser(userInfos.user, userInfos.id, coupleId, 1);
+        dispatch(setSettings({ ...settings, isLoading: true }));
+        navigate('/Home');
+      }, 1250);
+    } catch (error) {
+      setToast(2);
+    }
   };
 
   /** Function to handle next (for coupleId) */
@@ -166,27 +325,32 @@ function FirstStepPage(): JSX.Element {
         const memberLength = res.data()?.members.length;
         if (memberLength === 1) {
           const partnerId = res.data()?.members[0];
-          console.log('try');
+          const categoryId = uuidv4();
           try {
+            await setDoc(doc(db, 'categories', categoryId), {
+              coupleId: data.coupleId,
+              name: 'Private',
+              owner: userInfos.id,
+              currentValue: 0,
+              isPrivate: true,
+              id: categoryId,
+              parentId: 0,
+            });
             await addAccounts(data.coupleId);
-            console.log('1');
             await updateDoc(doc(db, 'couples', data.coupleId), {
               members: [partnerId, userInfos.id],
             });
-            console.log('2');
 
             await updateDoc(doc(db, 'users', userInfos.id), {
               coupleId: data.coupleId,
               partnerId,
               tutorial: 2,
             });
-            console.log('3');
 
             await updateDoc(doc(db, 'users', partnerId), {
               partnerId: userInfos.id,
               tutorial: 0,
             });
-            console.log('4');
 
             setToast(3);
             setTimeout(() => {
