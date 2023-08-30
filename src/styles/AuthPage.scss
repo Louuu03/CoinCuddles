@@ -38,6 +38,10 @@
         width: 150px;
         color: white;
         float: right;
+
+        &:hover {
+          background-color: $primary-pink;
+        }
       }
     }
   }
