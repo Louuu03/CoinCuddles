@@ -10,17 +10,20 @@
     font-family: 'Bricolage Grotesque', sans-serif;
 
     .AccordionBox {
-      background-color: $transparent-green;
+      background-color: $transparent-blue;
 
-      .AccordionTitle{
+      .AccordionTitle {
         display: flex;
         flex-direction: row-reverse;
 
-        .TitleBox{
+        .TitleBox {
           width: 100%;
           display: flex;
           flex-direction: row;
           justify-content: space-between;
+          .TitleTotal {
+            padding-right: 2px;
+          }
         }
       }
     }
@@ -29,6 +32,30 @@
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+      align-items: center;
+      padding: 5px 2px;
+      padding-left: 10px;
+
+      margin: 2px 0px;
+
+      .DName {
+        max-width: 100px;
+      }
+
+      &:hover {
+        cursor: pointer;
+        background-color: $transparent-blue;
+        border-radius: 5px;
+      }
     }
+  }
+  .MuiAccordionDetails-root {
+    padding: 0px 16px 5px;
+  }
+  .MuiAccordionSummary-root.Mui-expanded,
+  .MuiAccordionSummary-content.Mui-expanded {
+    min-height: 40px;
+    margin: 0;
+    line-height: 40px;
   }
 }

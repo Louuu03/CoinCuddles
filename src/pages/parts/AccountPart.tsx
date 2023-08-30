@@ -40,7 +40,7 @@ function AccountPart(): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [accounts, setAccounts] = useState<object>({});
-  const [total, setTotal] = useState<object>([0,0,0,0,0]);
+  const [total, setTotal] = useState<object>([0, 0, 0, 0, 0]);
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
@@ -92,10 +92,10 @@ function AccountPart(): JSX.Element {
             docs.push(d);
           });
           setAccounts(docs);
-          let totalAmount=[0,0,0,0,0];
-          map(docs,(d,idx)=>{
-            totalAmount[d.type-1]+=d.currentValue;
-          })
+          let totalAmount = [0, 0, 0, 0, 0];
+          map(docs, (d, idx) => {
+            totalAmount[d.type - 1] += d.currentValue;
+          });
           setTotal(totalAmount);
         })
         .catch(() => dispatch(setSettings({ ...settings, isLoading: false })));
@@ -113,10 +113,13 @@ function AccountPart(): JSX.Element {
             !isEmpty(find(accounts, ['type', typeIdx + 1])) && (
               <Box className={`Accordion ${'A' + typeIdx}`} key={'A' + typeIdx}>
                 <Accordion className="AccordionBox">
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />} className='AccordionTitle'>
-                    <Box className='TitleBox'>
-                    <Box>{type}</Box>
-                    <Box>{total[typeIdx]}</Box>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    className="AccordionTitle"
+                  >
+                    <Box className="TitleBox">
+                      <Box>{type}</Box>
+                      <Box className="TitleTotal">{total[typeIdx]}</Box>
                     </Box>
                   </AccordionSummary>
                   <AccordionDetails>
@@ -124,7 +127,7 @@ function AccountPart(): JSX.Element {
                       return (
                         account.type === typeIdx + 1 && (
                           <Box className="Detail" key={idx}>
-                            <Box>{account.name}</Box>
+                            <Box className="DName">{account.name}</Box>
                             <Box>{account.currentValue}</Box>
                           </Box>
                         )
