@@ -28,6 +28,9 @@ const Lang = {
     minWord: { eng: ['At least ', ' words.'], cn: ['至少', '字'] },
     required: { eng: 'Required.', cn: '必填' },
   },
+  accountType: {
+    eng: ['Normal', 'Cash', 'ForeignCurrency', 'Savings', 'Goals'],
+  },
 };
 
 export default Lang;
