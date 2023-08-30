@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
 import AuthPage from './AuthPage';
-import HomePage from './HomePage';
 import { Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserInfos } from '../redux/reducers/userSlice';
 import LoadingPage from './LoadingPage';
 import { setSettings } from '../redux/reducers/settingsSlice';
+import { useNavigate } from 'react-router-dom';
 
 function App(): JSX.Element {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const userInfos = useSelector(
     (state: {
@@ -43,15 +45,15 @@ function App(): JSX.Element {
     );
   }, []);
 
+  useEffect(() => {
+    userInfos.user &&
+      userInfos.id &&
+      (!userInfos.coupleId ? navigate('/PairUp') : navigate('/Home'));
+  }, [userInfos]);
+
   return (
     <Box className="App FullPageBox">
-      {settings.isLoading ? (
-        <LoadingPage />
-      ) : userInfos.user && userInfos.id ? (
-        <HomePage />
-      ) : (
-        <AuthPage />
-      )}
+      {settings.isLoading ? <LoadingPage /> : <AuthPage />}
     </Box>
   );
 }
