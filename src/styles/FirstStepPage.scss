@@ -24,39 +24,38 @@
         display: flex;
         flex-direction: row;
 
-        .input{
-            width: calc(100% - 40px);
+        .input {
+          width: calc(100% - 40px);
         }
 
-        .NextBtn{
-            width: 35px;
-            height: 35px;
-            min-width: 0;
-            padding: 0;
-            background-color: $secondary-purple;
-            border-radius: 50%;
-            color: white;
-            margin-left: 5px;
-            margin-top: 12px;
+        .NextBtn {
+          width: 35px;
+          height: 35px;
+          min-width: 0;
+          padding: 0;
+          background-color: $secondary-purple;
+          border-radius: 50%;
+          color: white;
+          margin-left: 5px;
+          margin-top: 12px;
 
-            &:hover{
-                background-color: $transparent-purple;
-                color:  $secondary-purple;
-
-            }
+          &:hover {
+            background-color: $transparent-purple;
+            color: $secondary-purple;
+          }
         }
       }
       h2 {
         font-size: 20px;
       }
-      .CreateBtn{
+      .CreateBtn {
         background-color: $primary-blue;
         color: white;
         padding: 10px 10px;
         font-weight: 600;
 
-        &:hover{
-            background-color: $primary-yellow;
+        &:hover {
+          background-color: $primary-yellow;
         }
       }
     }
