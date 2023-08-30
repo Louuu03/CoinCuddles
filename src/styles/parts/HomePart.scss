@@ -1,0 +1,42 @@
+@import '../colors';
+
+.HomePart {
+  .Navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+      text-decoration: none;
+    }
+
+    .Box {
+      width: 80px;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      height: 50px;
+      background-color: $primary-blue;
+      margin: 2px;
+      font-size: 18px;
+      text-align: center;
+      color: white;
+      word-break: break-word;
+      line-height: 50px;
+      border-radius: 5px;
+
+      &:hover {
+        opacity: 0.5;
+      }
+      &.B {
+        background-color: $primary-yellow;
+      }
+      &.T {
+        background-color: $secondary-purple;
+      }
+      &.C {
+        font-size: 17px;
+        line-height: 24px;
+        background-color: $primary-green;
+      }
+    }
+  }
+}
