@@ -18,6 +18,7 @@ function App(): JSX.Element {
           user: string;
           id: string;
           coupleId: string | null;
+          tutorial: 0 | 1 | 2;
         };
       };
     }) => state.userInfos.userInfos,

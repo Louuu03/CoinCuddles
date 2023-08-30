@@ -29,6 +29,17 @@ function FirstStepPage(): JSX.Element {
   const setUser = (user: string, id: string, coupleId: string | null) => {
     dispatch(setUserInfos({ user, id, coupleId }));
     localStorage.setItem('user', JSON.stringify({ user, id, coupleId }));
+  const setUser = (
+    user: string,
+    id: string,
+    coupleId: string | null,
+    tutorial: 0 | 1 | 2,
+  ) => {
+    dispatch(setUserInfos({ user, id, coupleId, tutorial }));
+    localStorage.setItem(
+      'user',
+      JSON.stringify({ user, id, coupleId, tutorial }),
+    );
   };
   const userInfos = useSelector(
     (state: {
@@ -37,6 +48,7 @@ function FirstStepPage(): JSX.Element {
           user: string;
           id: string;
           coupleId: string | null;
+          tutorial: 0 | 1 | 2;
         };
       };
     }) => state.userInfos.userInfos,

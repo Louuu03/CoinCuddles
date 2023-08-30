@@ -5,6 +5,7 @@ interface UserInfos {
   user: string | null;
   id: string | null;
   coupleId: string | null;
+  tutorial: 0 | 1 | 2; //0:none, 1:newly alone in a couple, 2 newly add to a couple
 }
 
 interface UserState {
@@ -12,7 +13,7 @@ interface UserState {
 }
 
 const initialState: UserState = {
-  userInfos: { user: null, id: null, coupleId: null },
+  userInfos: { user: null, id: null, coupleId: null, tutorial: 0 },
 };
 
 const userSlice = createSlice({

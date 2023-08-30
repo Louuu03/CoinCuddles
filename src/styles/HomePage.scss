@@ -1,22 +1,31 @@
 @import './colors';
 
 .HomePage {
-  .Main {
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
+  .MainTheme {
+    width: 100vw;
+    height: 100vh;
+    background-color: $secondary-pink;
     display: flex;
-    flex-direction: column;
-    position: relative;
-    justify-content: flex-start;
-    align-items: center;
-    padding-left: 30px;
-    background-color: $secondary-green;
+    flex-direction: row;
 
+    .Icon {
+      padding-top: 20px;
+      height: 20px;
+    }
     .Display {
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       background-color: $background-color;
+      border-radius: 7px 0 0 7px;
+
+      h1 {
+        text-align: center;
+        font-family: 'Permanent Marker', cursive;
+        color: $primary-pink;
+        margin: 10px 0;
+        font-size: 25px;
+      }
+
     }
   }
 }

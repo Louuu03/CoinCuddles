@@ -2,7 +2,6 @@ import '../styles/AuthPage.scss';
 import Lang from '../languages';
 import firebaseConfig from '../firebaseConfig';
 import { setUserInfos } from '../redux/reducers/userSlice';
-
 import React, { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import {
@@ -57,9 +56,17 @@ function AuthPage(): JSX.Element {
 
   /** Redux */
   const dispatch = useDispatch();
-  const setUser = (user: string, id: string, coupleId: string | null) => {
-    dispatch(setUserInfos({ user, id, coupleId }));
-    localStorage.setItem('user', JSON.stringify({ user, id, coupleId }));
+  const setUser = (
+    user: string,
+    id: string,
+    coupleId: string | null,
+    tutorial: 0 | 1 | 2,
+  ) => {
+    dispatch(setUserInfos({ user, id, coupleId, tutorial }));
+    localStorage.setItem(
+      'user',
+      JSON.stringify({ user, id, coupleId, tutorial }),
+    );
   };
   const settings = useSelector(
     (state: { settings: { settings: { lang: string } } }) =>
@@ -90,13 +97,7 @@ function AuthPage(): JSX.Element {
   ) => {
     setShowPassword(!showPassword);
   };
-  /** Function to close toast */
-  const handleToastClose = (
-    event: React.SyntheticEvent | Event,
-    reason?: string,
-  ) => {
-    setToast(0);
-  };
+
   /** Function to handle submission */
   const onSubmit: SubmitHandler<Infos> = (data: Infos) => {
     tab === 0
@@ -109,6 +110,7 @@ function AuthPage(): JSX.Element {
                   res.data()?.user || null,
                   userCredential.user.uid,
                   res.data()?.coupleId,
+                  res.data()?.tutorial,
                 );
               })
               .catch((error) => {
@@ -125,10 +127,11 @@ function AuthPage(): JSX.Element {
               coupleId: null,
               isAnonymous: false,
               partnerId: null,
+              tutorial: 1,
             })
               .then(() => {
                 setToast(1);
-                setUser(data.user, userCredential.user.uid, null);
+                setUser(data.user, userCredential.user.uid, null, 1);
               })
               .catch((error) => {
                 setToast(2);
@@ -237,7 +240,7 @@ function AuthPage(): JSX.Element {
       <Snackbar
         open={toast !== 0}
         autoHideDuration={1500}
-        onClose={handleToastClose}
+        onClose={() => setToast(0)}
       >
         <Alert
           severity={toast === 1 ? 'success' : 'error'}
