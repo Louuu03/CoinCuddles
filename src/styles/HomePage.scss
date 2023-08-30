@@ -25,7 +25,38 @@
         margin: 10px 0;
         font-size: 25px;
       }
+    }
 
+    &.Account {
+      background-color: $secondary-blue;
+
+      h1 {
+        color: $primary-blue;
+      }
+    }
+
+    &.Budget {
+      background-color: $secondary-yellow;
+
+      h1 {
+        color: $primary-yellow;
+      }
+    }
+
+    &.Transactions {
+      background-color: $secondary-purple;
+
+      h1 {
+        color: $primary-purple;
+      }
+    }
+
+    &.CategoriesAndTags {
+      background-color: $secondary-green;
+
+      h1 {
+        color: $primary-green;
+      }
     }
   }
 }

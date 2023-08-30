@@ -22,7 +22,6 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { split, last } from 'lodash';
 import LoadingPage from './LoadingPage';
 
-
 function HomePage(): JSX.Element {
   const [isDlgOpen, setIsDlgOpen] = useState<boolean>(false);
   const [isToast, setIsToast] = useState<boolean>(false);
@@ -76,9 +75,9 @@ function HomePage(): JSX.Element {
   }, []);
 
   useEffect(() => {
-    const hrl = last(split( window.location.href,'/'));
+    const hrl = last(split(window.location.href, '/'));
     setTheme(hrl);
-}, [window.location.href]);
+  }, [window.location.href]);
   return (
     <Box className="HomePage FullPageBox">
       <Box className={`MainTheme ${theme}`}>
