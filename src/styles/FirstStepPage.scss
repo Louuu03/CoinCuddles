@@ -54,6 +54,14 @@
         padding: 10px 10px;
         font-weight: 600;
 
+        div {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .Progress {
+          margin-right: 5px;
+        }
         &:hover {
           background-color: $primary-yellow;
         }

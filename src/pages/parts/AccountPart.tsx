@@ -34,6 +34,8 @@ interface AccountData {
   startValue: number;
   isPrivate: boolean;
   type: number;
+  id: string;
+  idx: number;
 }
 
 function AccountPart(): JSX.Element {

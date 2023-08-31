@@ -31,6 +31,8 @@ interface CategoryData {
   currentValue: number;
   isPrivate: boolean;
   parentId: string;
+  id: string;
+  idx: number;
 }
 
 function CategoryPart(): JSX.Element {
@@ -58,11 +60,6 @@ function CategoryPart(): JSX.Element {
     palette: {
       primary: {
         main: '#ffa500',
-      },
-      secondary: {
-        main: '#E0C2FF',
-        light: '#F5EBFF',
-        contrastText: '#47008F',
       },
     },
   });

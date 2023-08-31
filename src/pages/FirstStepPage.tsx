@@ -2,7 +2,14 @@ import '../styles/FirstStepPage.scss';
 import Lang from '../languages';
 
 import React, { useEffect, useState } from 'react';
-import { Box, TextField, Button, Snackbar, Alert } from '@mui/material';
+import {
+  Box,
+  TextField,
+  Button,
+  Snackbar,
+  Alert,
+  CircularProgress,
+} from '@mui/material';
 import StartIcon from '@mui/icons-material/Start';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
@@ -19,7 +26,7 @@ import {
 import { initializeApp } from 'firebase/app';
 import firebaseConfig from '../firebaseConfig';
 import { useNavigate } from 'react-router-dom';
-import { findKey, keys } from 'lodash';
+import { fill } from 'lodash';
 
 function FirstStepPage(): JSX.Element {
   let lang: string = 'eng';
@@ -29,6 +36,7 @@ function FirstStepPage(): JSX.Element {
   /** Stores whether the toast opens or not, and success or not. *
    * 0: closed | 1: create success | 2:create failed  | 3: succesfully joined | 4. failed to join*/
   const [toast, setToast] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<false | 0 | 1>(false);
 
   const toastTxt = {
     1: 'Successfully Created.',
@@ -80,7 +88,7 @@ function FirstStepPage(): JSX.Element {
     }) => state.settings.settings,
   );
 
-  async function addAccounts(coupleId: string) {
+  async function addAccounts(coupleId: string, type: 0 | 1) {
     const accountUUIDs = [uuidv4(), uuidv4(), uuidv4()];
     const accounts = [
       {
@@ -93,6 +101,8 @@ function FirstStepPage(): JSX.Element {
         startValue: 0,
         isPrivate: false,
         type: 1,
+        id: accountUUIDs[0],
+        idx: type === 0 ? 3 : 0,
       },
       {
         coupleId: coupleId,
@@ -103,7 +113,9 @@ function FirstStepPage(): JSX.Element {
         isGoal: false,
         startValue: 0,
         isPrivate: true,
+        id: accountUUIDs[1],
         type: 1,
+        idx: type === 0 ? 4 : 1,
       },
       {
         coupleId: coupleId,
@@ -115,6 +127,8 @@ function FirstStepPage(): JSX.Element {
         isPrivate: false,
         startValue: 0,
         type: 5,
+        id: accountUUIDs[2],
+        idx: type === 0 ? 5 : 2,
       },
     ];
     let err = false;
@@ -131,17 +145,8 @@ function FirstStepPage(): JSX.Element {
   }
 
   async function addCategories(coupleId: string) {
-    const categoryUUIDs = [
-      uuidv4(),
-      uuidv4(),
-      uuidv4(),
-      uuidv4(),
-      uuidv4(),
-      uuidv4(),
-      uuidv4(),
-      uuidv4(),
-      uuidv4(),
-    ];
+    const categoryUUIDs = fill(Array(15), 0);
+    categoryUUIDs.forEach((category, idx) => (categoryUUIDs[idx] = uuidv4()));
     const categories = [
       {
         coupleId: coupleId,
@@ -151,6 +156,7 @@ function FirstStepPage(): JSX.Element {
         isPrivate: false,
         parentId: 0,
         id: categoryUUIDs[0],
+        idx: 1,
       },
       {
         coupleId: coupleId,
@@ -159,6 +165,7 @@ function FirstStepPage(): JSX.Element {
         currentValue: 0,
         isPrivate: false,
         id: categoryUUIDs[1],
+        idx: 2,
         parentId: 0,
       },
       {
@@ -168,6 +175,7 @@ function FirstStepPage(): JSX.Element {
         currentValue: 0,
         isPrivate: false,
         id: categoryUUIDs[2],
+        idx: 3,
         parentId: 0,
       },
       {
@@ -177,6 +185,7 @@ function FirstStepPage(): JSX.Element {
         currentValue: 0,
         isPrivate: false,
         id: categoryUUIDs[3],
+        idx: 4,
         parentId: 0,
       },
       {
@@ -187,6 +196,7 @@ function FirstStepPage(): JSX.Element {
         isPrivate: false,
         parentId: 0,
         id: categoryUUIDs[4],
+        idx: 5,
       },
       {
         coupleId: coupleId,
@@ -196,6 +206,7 @@ function FirstStepPage(): JSX.Element {
         isPrivate: false,
         id: categoryUUIDs[5],
         parentId: 0,
+        idx: 6,
       },
       {
         coupleId: coupleId,
@@ -205,6 +216,7 @@ function FirstStepPage(): JSX.Element {
         id: categoryUUIDs[6],
         isPrivate: false,
         parentId: 0,
+        idx: 7,
       },
       {
         coupleId: coupleId,
@@ -214,6 +226,7 @@ function FirstStepPage(): JSX.Element {
         id: categoryUUIDs[7],
         isPrivate: false,
         parentId: 0,
+        idx: 8,
       },
       {
         coupleId: coupleId,
@@ -223,6 +236,7 @@ function FirstStepPage(): JSX.Element {
         isPrivate: true,
         id: categoryUUIDs[8],
         parentId: 0,
+        idx: 9,
       },
       {
         coupleId: coupleId,
@@ -231,6 +245,8 @@ function FirstStepPage(): JSX.Element {
         currentValue: 0,
         isPrivate: false,
         parentId: categoryUUIDs[1],
+        id: categoryUUIDs[9],
+        idx: 10,
       },
       {
         coupleId: coupleId,
@@ -239,6 +255,8 @@ function FirstStepPage(): JSX.Element {
         currentValue: 0,
         isPrivate: false,
         parentId: categoryUUIDs[1],
+        id: categoryUUIDs[10],
+        idx: 11,
       },
       {
         coupleId: coupleId,
@@ -247,6 +265,8 @@ function FirstStepPage(): JSX.Element {
         currentValue: 0,
         isPrivate: false,
         parentId: categoryUUIDs[1],
+        id: categoryUUIDs[11],
+        idx: 12,
       },
       {
         coupleId: coupleId,
@@ -255,6 +275,8 @@ function FirstStepPage(): JSX.Element {
         currentValue: 0,
         isPrivate: false,
         parentId: categoryUUIDs[1],
+        id: categoryUUIDs[12],
+        idx: 13,
       },
       {
         coupleId: coupleId,
@@ -263,6 +285,8 @@ function FirstStepPage(): JSX.Element {
         currentValue: 0,
         isPrivate: false,
         parentId: categoryUUIDs[6],
+        id: categoryUUIDs[13],
+        idx: 14,
       },
       {
         coupleId: coupleId,
@@ -271,6 +295,8 @@ function FirstStepPage(): JSX.Element {
         currentValue: 0,
         isPrivate: false,
         parentId: 7,
+        id: categoryUUIDs[14],
+        idx: 15,
       },
     ];
     let err = false;
@@ -288,31 +314,34 @@ function FirstStepPage(): JSX.Element {
 
   /** Function to handle creation of coupleId*/
   const handleCreate = async (event: React.SyntheticEvent<Element, Event>) => {
-    const coupleId = uuidv4();
+    if (!isLoading) {
+      setIsLoading(1);
+      const coupleId = uuidv4();
+      //add data
+      try {
+        await addAccounts(coupleId, 0);
+        await addCategories(coupleId);
 
-    //add data
-    try {
-      await addAccounts(coupleId);
-      await addCategories(coupleId);
+        await updateDoc(doc(db, 'users', userInfos.id), {
+          coupleId: coupleId,
+        });
 
-      await updateDoc(doc(db, 'users', userInfos.id), {
-        coupleId: coupleId,
-      });
+        await setDoc(doc(db, 'couples', coupleId), {
+          members: [userInfos.id, null],
+          currency: 'twd',
+        });
+        setIsLoading(false);
+        setToast(1);
 
-      await setDoc(doc(db, 'couples', coupleId), {
-        members: [userInfos.id, null],
-        currency: 'twd',
-      });
-
-      setToast(1);
-
-      setTimeout(() => {
-        setUser(userInfos.user, userInfos.id, coupleId, 1);
-        dispatch(setSettings({ ...settings, isLoading: true }));
-        navigate('/Home');
-      }, 1250);
-    } catch (error) {
-      setToast(2);
+        setTimeout(() => {
+          setUser(userInfos.user, userInfos.id, coupleId, 1);
+          dispatch(setSettings({ ...settings, isLoading: true }));
+          navigate('/Home');
+        }, 1250);
+      } catch (error) {
+        setToast(2);
+        setIsLoading(false);
+      }
     }
   };
 
@@ -320,59 +349,65 @@ function FirstStepPage(): JSX.Element {
   const handleNext: SubmitHandler<{ coupleId: string }> = (data: {
     coupleId: string;
   }) => {
-    getDoc(doc(db, 'couples', data.coupleId))
-      .then(async (res) => {
-        const memberLength = res.data()?.members.length;
-        if (memberLength === 1) {
-          const partnerId = res.data()?.members[0];
-          const categoryId = uuidv4();
-          try {
-            await setDoc(doc(db, 'categories', categoryId), {
-              coupleId: data.coupleId,
-              name: 'Private',
-              owner: userInfos.id,
-              currentValue: 0,
-              isPrivate: true,
-              id: categoryId,
-              parentId: 0,
-            });
-            await addAccounts(data.coupleId);
-            await updateDoc(doc(db, 'couples', data.coupleId), {
-              members: [partnerId, userInfos.id],
-            });
+    if (!isLoading) {
+      setIsLoading(0);
+      getDoc(doc(db, 'couples', data.coupleId))
+        .then(async (res) => {
+          const memberLength = res.data()?.members.length;
+          if (memberLength === 1) {
+            const partnerId = res.data()?.members[0];
+            const categoryId = uuidv4();
+            try {
+              await setDoc(doc(db, 'categories', categoryId), {
+                coupleId: data.coupleId,
+                name: 'Private',
+                owner: userInfos.id,
+                currentValue: 0,
+                isPrivate: true,
+                id: categoryId,
+                parentId: 0,
+                idx: 0,
+              });
+              await addAccounts(data.coupleId, 1);
+              await updateDoc(doc(db, 'couples', data.coupleId), {
+                members: [partnerId, userInfos.id],
+              });
 
-            await updateDoc(doc(db, 'users', userInfos.id), {
-              coupleId: data.coupleId,
-              partnerId,
-              tutorial: 2,
-            });
+              await updateDoc(doc(db, 'users', userInfos.id), {
+                coupleId: data.coupleId,
+                partnerId,
+                tutorial: 2,
+              });
 
-            await updateDoc(doc(db, 'users', partnerId), {
-              partnerId: userInfos.id,
-              tutorial: 0,
-            });
+              await updateDoc(doc(db, 'users', partnerId), {
+                partnerId: userInfos.id,
+                tutorial: 0,
+              });
 
-            setToast(3);
-            setTimeout(() => {
-              dispatch(setSettings({ ...settings, isLoading: true }));
-              setUser(userInfos.user, userInfos.id, data.coupleId, 2);
-              navigate('/Home');
-            }, 1250);
-          } catch (error) {
-            setToast(4);
+              setIsLoading(false);
+              setToast(3);
+              setTimeout(() => {
+                dispatch(setSettings({ ...settings, isLoading: true }));
+                setUser(userInfos.user, userInfos.id, data.coupleId, 2);
+                navigate('/Home');
+              }, 1250);
+            } catch (error) {
+              setToast(4);
+            }
+          } else {
+            setToast(5);
+            setIsLoading(false);
           }
-        } else {
-          setToast(5);
-        }
-      })
-      .catch(() => setToast(4));
+        })
+        .catch(() => {
+          setIsLoading(false);
+          setToast(4);
+        });
+    }
   };
 
   /** Function to close toast */
-  const handleToastClose = (
-    event: React.SyntheticEvent | Event,
-    reason?: string,
-  ) => {
+  const handleToastClose = () => {
     setToast(0);
   };
 
@@ -401,13 +436,32 @@ function FirstStepPage(): JSX.Element {
                 })}
               />
               <Button className="NextBtn" onClick={handleSubmit(handleNext)}>
-                <StartIcon />
+                {isLoading === 0 ? (
+                  <CircularProgress
+                    size={20}
+                    color="inherit"
+                    className="Progress"
+                  />
+                ) : (
+                  <StartIcon />
+                )}
               </Button>
             </Box>
 
             <h3>Or</h3>
             <Button className="CreateBtn" onClick={handleCreate}>
-              Create new Couple Id
+              {isLoading === 1 ? (
+                <Box>
+                  <CircularProgress
+                    size={20}
+                    color="inherit"
+                    className="Progress"
+                  />
+                  Creating...
+                </Box>
+              ) : (
+                'Create new Couple Id'
+              )}
             </Button>
           </Box>
           <Snackbar
