@@ -1,0 +1,321 @@
+@import '../colors';
+@mixin buttons($primary) {
+  color: $primary;
+
+  &:hover {
+    background-color: $primary;
+    color: white;
+  }
+}
+
+.AddTxnPart {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  background-color: $background-pink;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  padding-top: 30px;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  .TypeBox {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 30px;
+
+    .ButtonGroup {
+      width: 80%;
+
+      button {
+        font-size: 12px;
+        width: inherit;
+        font-weight: 700;
+        background-color: rgba(255, 255, 255, 0.396);
+        &.E {
+          @include buttons($txn-red);
+        }
+
+        &.I {
+          @include buttons($txn-green);
+        }
+        &.T {
+          @include buttons($primary-blue);
+        }
+      }
+    }
+  }
+  .MainBox {
+    display: flex;
+    flex-direction: row;
+    .Left {
+      width: calc(60% - 10px);
+      height: 100%;
+      display: flex;
+      justify-content: flex-start;
+      flex-direction: column;
+      padding-left: 10px;
+
+      .SelectGroup {
+        margin: 0;
+        margin-top: 20px;
+      }
+      .Split{
+        border-radius: 5px;
+        font-family: 'Bricolage Grotesque', sans-serif;
+        padding: 5px 10px;
+        padding-bottom: 10px;
+        width: calc(100% - 20px);
+        box-sizing: border-box;
+        margin-top: 10px;
+        color: white;
+        .Toggle {
+          display: flex;
+          justify-content: space-between;
+          height: 40px;
+          line-height: 40px;
+          .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
+            background-color: white;
+          }
+          .MuiSwitch-switchBase.Mui-checked {
+            color: white;
+          }
+        }
+          .SplitGroup {
+            height: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        label {
+          margin-left: -10px;
+        }
+        .SplitAmount{
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          align-items: flex-end;
+          padding-right: 10px;
+          box-sizing: border-box;
+          label{
+            color: white;
+          }
+          .SplitM {
+          padding-top: 6px;
+          width: calc(100% - 10px);
+          color:white;
+          p{
+            color: white;
+            padding-bottom: 12px;
+          }
+          input{
+            height: 30px;
+            padding-bottom: 0px;
+          }
+        }
+        span{
+          font-size: 15px;
+        font-family: 'Bricolage Grotesque', sans-serif;
+          padding-bottom: 5px;
+        }
+        }
+        
+        .Slider{
+          width: 90%;
+          margin-top: 5px;
+        }
+      }
+      }
+    
+    }
+
+    .Right {
+      padding-top: 20px;
+      padding-right: 10px;
+      width: 40%;
+      height: 100%;
+      display: flex;
+      justify-content: flex-start;
+      flex-direction: column;
+      .Amount {
+        width: calc(100% - 8px);
+        margin-right: 0;
+
+        .MuiFormControl-root {
+          background-color: $transparent-pink;
+          padding: 8px 8px;
+          border-radius: 5px;
+          width: inherit;
+        }
+        .MuiInputBase-root {
+          height: 60px;
+          padding-top: 78px;
+          font-size: 60px;
+          padding-bottom: 20px;
+          input {
+            padding-bottom: 25px;
+            text-align: right;
+          }
+          &.L4 {
+            input {
+              font-size: 48px;
+              padding-bottom: 15px;
+            }
+          }
+          &.L5 {
+            input {
+              font-size: 38px;
+              padding-bottom: 10px;
+            }
+          }
+          &.L6 {
+            input {
+              font-size: 30px;
+              padding-bottom: 0px;
+            }
+          }
+          &.L7 {
+            input {
+              font-size: 22px;
+              padding-bottom: 0px;
+
+              margin-bottom: -5px;
+            }
+          }
+        }
+      }
+      .InputDetails {
+        margin-top: 12px;
+        width: 100%;
+        box-sizing: content-box;
+      }
+      .Repeat {
+        border-radius: 5px;
+        font-family: 'Bricolage Grotesque', sans-serif;
+        padding: 5px 10px;
+        padding-bottom: 10px;
+        width: calc(100% - 20px);
+        box-sizing:content-box;
+        margin-top: 11px;
+        color: white;
+        label{
+          color: white;
+        }
+        .Toggle {
+          display: flex;
+          justify-content: space-between;
+          height: 40px;
+          line-height: 40px;
+          .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
+            background-color: white;
+          }
+          .MuiSwitch-switchBase.Mui-checked {
+            color: white;
+          }
+        }
+        .Form{
+          height: 100px;
+          .InputRT {
+            width: 105px;
+          input {
+            color: white;
+          }
+        }
+        #Interval{
+          font-size: 12px;
+          margin-top: 5px;
+          margin-bottom: -5px;
+        }
+        .IntervelGroup {
+          display: flex;
+          flex-direction: row;
+          align-items: flex-end;
+          .InputRI {
+            margin-right: 5px;
+            width: 25px;
+            input {
+              color: white;
+              text-align: right;
+            }
+          }
+          .InputRM {
+            width: 75px;
+            div {
+              color: white;
+            }
+          }
+        }
+        }
+        
+      }
+    }
+    .InputStyle {
+      margin-top: 20px;
+      width: calc(100% - 20px);
+      label {
+        color: gray;
+      }
+      .MuiInputBase-root {
+        background-color: white;
+      }
+      .MuiOutlinedInput-notchedOutline {
+        border: 2px solid gray;
+      }
+    }
+
+    .MuiSelect-select {
+      width: 120px;
+    }
+  }
+  
+  .Btn{
+    height: 60px;
+    width: 100%;
+    position: absolute;
+    bottom: 30px;
+    color: white;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 30px;
+    border-radius: 0;
+  }
+  &.Expense {
+    background-color: $background-pink;
+    .TypeBox .ButtonGroup {
+      .E {
+        background-color: $txn-red;
+        color: white;
+      }
+    }
+    .Repeat, .Split {
+      background-color: $txn-red;
+    }
+    .Btn{background-color: $txn-red;}
+  }
+  &.Income {
+    background-color: $background-green;
+    .TypeBox .ButtonGroup {
+      .I {
+        background-color: $txn-green;
+        color: white;
+      }
+    }
+    .Repeat, .Split {
+      background-color: $txn-green;
+    }
+    .Btn{background-color: $txn-green;}
+  }
+  &.Transfer {
+    background-color: $background-blue;
+    .TypeBox .ButtonGroup {
+      .T {
+        background-color: $primary-blue;
+        color: white;
+      }
+    }
+    .Repeat, .Split {
+      background-color: $primary-blue;
+    }
+    .Btn{background-color: $primary-blue;}
+  }
+}
