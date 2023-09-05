@@ -11,6 +11,8 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  SpeedDial,
+  SpeedDialAction,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSettings } from '../redux/reducers/settingsSlice';
@@ -21,11 +23,17 @@ import { doc, updateDoc, getFirestore } from 'firebase/firestore';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { split, last } from 'lodash';
 import LoadingPage from './LoadingPage';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import HomeIcon from '@mui/icons-material/Home';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate';
+import CloseIcon from '@mui/icons-material/Close';
 
 function HomePage(): JSX.Element {
   const [isDlgOpen, setIsDlgOpen] = useState<boolean>(false);
   const [isToast, setIsToast] = useState<boolean>(false);
   const [theme, setTheme] = useState<string>('Home');
+  const [isList, setIsList] = useState<boolean>(false);
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
@@ -52,6 +60,19 @@ function HomePage(): JSX.Element {
       };
     }) => state.settings.settings,
   );
+
+  const actions = [
+    //  { icon: <FileCopyIcon />, name: 'Copy' },
+    { icon: <ControlPointDuplicateIcon />, name: 'Add Transaction', id: 0 },
+    { icon: <AccountBalanceIcon />, name: 'Account', id: 1 },
+    { icon: <HomeIcon />, name: 'Home', id: 2 },
+  ];
+
+  const handleSpeedDial = (value: number) => {
+    value === 0 && navigate('/Home/AddTransactions');
+    value === 1 && navigate('/Home/Account');
+    value === 2 && navigate('/Home');
+  };
 
   const handleDlgClose = (event: React.SyntheticEvent | Event) => {
     setIsDlgOpen(false);
@@ -81,14 +102,108 @@ function HomePage(): JSX.Element {
   return (
     <Box className="HomePage FullPageBox">
       <Box className={`MainTheme ${theme}`}>
-        <img
-          className="Icon"
-          src={require('../assets/Image/menu.png')}
-          alt="Icon"
-        />
-        <Box className="Display">
-          <h1>Coin Cuddles</h1>
-          <Outlet />
+        <Box className={`HidedList ${isList && 'ListOpen'}`}>
+          {!isList ? (
+            <img
+              className="Icon"
+              src={require('../assets/Image/menu.png')}
+              alt="Icon"
+              onClick={() => setIsList(true)}
+            />
+          ) : (
+            <CloseIcon
+              className="Icon"
+              fontSize="large"
+              onClick={() => setIsList(false)}
+            />
+          )}
+          <ul className="Nav">
+            <li>Home</li>
+            <li>Account</li>
+            <li>
+              Daily Limit{' '}
+              <img
+                className="ComingSoon"
+                src={require('../assets/Image/comingsoon.png')}
+                alt="Icon"
+              />
+            </li>
+            <li>
+              Split Book
+              <img
+                className="ComingSoon"
+                src={require('../assets/Image/comingsoon.png')}
+                alt="Icon"
+              />
+            </li>
+            <li>Transactions</li>
+            <li>Category/Tag</li>
+            <li>
+              Budget
+              <img
+                className="ComingSoon"
+                src={require('../assets/Image/comingsoon.png')}
+                alt="Icon"
+              />
+            </li>
+            <li>
+              Goals
+              <img
+                className="ComingSoon"
+                src={require('../assets/Image/comingsoon.png')}
+                alt="Icon"
+              />
+            </li>
+            <li>
+              Subscriptions
+              <img
+                className="ComingSoon"
+                src={require('../assets/Image/comingsoon.png')}
+                alt="Icon"
+              />
+            </li>
+            <li>
+              WhishList
+              <img
+                className="ComingSoon"
+                src={require('../assets/Image/comingsoon.png')}
+                alt="Icon"
+              />
+            </li>
+            <li>
+              Activities
+              <img
+                className="ComingSoon"
+                src={require('../assets/Image/comingsoon.png')}
+                alt="Icon"
+              />
+            </li>
+          </ul>
+          <Box className="Settings">
+            <Box className="User">
+              <img
+                className="UserIcon"
+                src={require('../assets/Image/user.png')}
+                alt="Icon"
+              />
+              Account
+            </Box>
+            <Box>
+              {' '}
+              <img
+                className="SettingIcon"
+                src={require('../assets/Image/setting.png')}
+                alt="Icon"
+              />
+            </Box>
+          </Box>
+        </Box>
+
+        <Box className={`Display ${isList && 'ListOpen'}`}>
+          <Box className="Container">
+            <h1>Coin Cuddles</h1>
+            <Outlet />
+          </Box>
         </Box>
         {isDlgOpen && userInfos.tutorial === 1 ? (
           <Dialog
@@ -141,6 +256,27 @@ function HomePage(): JSX.Element {
               </Alert>
             </Snackbar>
           </Dialog>
+        )}
+        {theme !== 'AddTransactions' && (
+          <SpeedDial
+            ariaLabel="SpeedDial"
+            direction="left"
+            sx={{ position: 'absolute', bottom: 16, right: 16 }}
+            icon={<SpeedDialIcon />}
+            className={`SpeedDial ${isList && 'ListOpen'}`}
+          >
+            {actions.map(
+              (action) =>
+                !(theme == 'Home' && action.id == 2) && (
+                  <SpeedDialAction
+                    key={action.name}
+                    icon={action.icon}
+                    tooltipTitle={action.name}
+                    onClick={() => handleSpeedDial(action.id)}
+                  />
+                ),
+            )}
+          </SpeedDial>
         )}
       </Box>
       {settings.isLoading && <LoadingPage />}

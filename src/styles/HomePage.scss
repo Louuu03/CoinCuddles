@@ -1,23 +1,126 @@
 @import './colors';
 
+@mixin theme($primary_color, $secondary_color) {
+  background-color: $secondary_color;
+  h1 {
+    color: $primary_color;
+  }
+  .MuiSpeedDial-fab {
+    background-color: $primary_color;
+  }
+}
+
 .HomePage {
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
   .MainTheme {
     width: 100vw;
     height: 100vh;
     background-color: $secondary-pink;
     display: flex;
     flex-direction: row;
+    overflow: hidden;
+    box-sizing: border-box;
 
-    .Icon {
-      padding-top: 20px;
-      height: 20px;
+    .HidedList {
+      position: relative;
+      overflow: hidden;
+      height: 100vh;
+      width: 200px;
+      display: flex;
+      flex-direction: column;
+
+      &.ListOpen {
+        .Icon {
+          padding-left: 10px;
+        }
+      }
+
+      .Icon {
+        padding-top: 20px;
+        height: 20px;
+        width: 20px;
+      }
+
+      .Nav {
+        padding-left: 0;
+        li {
+          list-style: none;
+          font-size: 18px;
+          padding: 10px 0;
+          padding-left: 30px;
+          height: 30px;
+          display: flex;
+          align-items: center;
+          font-family: 'Merriweather', serif;
+          font-weight: 300;
+          line-height: 30px;
+          .ComingSoon {
+            margin-left: 5px;
+            width: 24px;
+          }
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.19);
+            cursor: pointer;
+          }
+        }
+      }
+      .Settings {
+        background-color: rgba(255, 255, 255, 0.348);
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: flex-end;
+        padding: 10px 10px;
+        box-sizing: border-box;
+        .User {
+          display: flex;
+          align-items: center;
+          font-size: 16px;
+          border-right: 2px solid black;
+          font-weight: 300;
+          padding-right: 10px;
+          font-family: 'Merriweather', serif;
+
+          .UserIcon {
+            width: 30px;
+          }
+          margin-right: 10px;
+        }
+        .SettingIcon {
+          width: 25px;
+        }
+      }
     }
+
     .Display {
-      width: 100vw;
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      left: 20px;
+      width: calc(100% - 20px);
       height: 100vh;
       background-color: $background-color;
       border-radius: 7px 0 0 7px;
+      z-index: 200;
+      transition: left 0.3s ease-out, opacity 0.3s ease-out, width 0.3s ease-out;
 
+      &.ListOpen {
+        left: 200px;
+        opacity: 0.55;
+        pointer-events: none;
+        width: calc(100% - 200px);
+        overflow: hidden;
+      }
+      .Container {
+        min-width: 373px;
+        position: inherit;
+      }
       h1 {
         text-align: center;
         font-family: 'Permanent Marker', cursive;
@@ -26,37 +129,29 @@
         font-size: 25px;
       }
     }
+    .SpeedDial {
+      .MuiSpeedDial-fab {
+        background-color: $primary-pink;
+      }
+      &.ListOpen {
+        display: none;
+      }
+    }
 
     &.Account {
-      background-color: $secondary-blue;
-
-      h1 {
-        color: $primary-blue;
-      }
+      @include theme($primary-blue, $secondary-blue);
     }
 
     &.Budget {
-      background-color: $secondary-yellow;
-
-      h1 {
-        color: $primary-yellow;
-      }
+      @include theme($primary-yellow, $secondary-yellow);
     }
 
     &.Transactions {
-      background-color: $secondary-purple;
-
-      h1 {
-        color: $primary-purple;
-      }
+      @include theme($primary-purple, $secondary-purple);
     }
 
     &.CategoriesAndTags {
-      background-color: $secondary-green;
-
-      h1 {
-        color: $primary-green;
-      }
+      @include theme($primary-green, $secondary-green);
     }
   }
 }
