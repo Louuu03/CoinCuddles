@@ -374,7 +374,6 @@ function FirstStepPage(): JSX.Element {
           members: [userInfos.id, null],
           currency: 'twd',
         });
-        setIsLoading(false);
         setToast(1);
 
         setTimeout(() => {
@@ -429,7 +428,6 @@ function FirstStepPage(): JSX.Element {
                 tutorial: 0,
               });
 
-              setIsLoading(false);
               setToast(3);
               setTimeout(() => {
                 dispatch(setSettings({ ...settings, isLoading: true }));
