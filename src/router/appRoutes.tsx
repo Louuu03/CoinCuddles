@@ -8,6 +8,7 @@ import CategoryPart from '../pages/parts/CategoryPart';
 import BudgetPart from '../pages/parts/BudgetPart';
 import TxnPart from '../pages/parts/TxnPart';
 import HomePart from '../pages/parts/HomePart';
+import AddTxnPart from '../pages/parts/AddTxnPart';
 
 const AppRoutes = () => {
   return (
@@ -19,6 +20,7 @@ const AppRoutes = () => {
         <Route path="/Home/CategoriesAndTags" element={<CategoryPart />} />
         <Route path="/Home/Budget" element={<BudgetPart />} />
         <Route path="/Home/Transactions" element={<TxnPart />} />
+        <Route path="/Home/AddTransactions" element={<AddTxnPart />} />
       </Route>
       <Route path="/Auth" element={<AuthPage />} />
       <Route path="/PairUp" element={<FirstStepPage />} />
