@@ -88,13 +88,16 @@ function FirstStepPage(): JSX.Element {
     }) => state.settings.settings,
   );
 
+  /** 
+   * @param type  0: create, 1: add
+   */
   async function addAccounts(coupleId: string, type: 0 | 1) {
-    const accountUUIDs = [uuidv4(), uuidv4(), uuidv4()];
+    const accountUUIDs = [uuidv4(), uuidv4(), uuidv4(), uuidv4()];
     const accounts = [
       {
         coupleId: coupleId,
         name: userInfos.user + "'s Normal account",
-        owner: null,
+        owner: userInfos.id,
         currentValue: 0,
         date: Date.now(),
         isGoal: false,
@@ -102,7 +105,7 @@ function FirstStepPage(): JSX.Element {
         isPrivate: false,
         type: 1,
         id: accountUUIDs[0],
-        idx: type === 0 ? 3 : 0,
+        idx: type === 0 ? 4 : 0,
       },
       {
         coupleId: coupleId,
@@ -115,12 +118,12 @@ function FirstStepPage(): JSX.Element {
         isPrivate: true,
         id: accountUUIDs[1],
         type: 1,
-        idx: type === 0 ? 4 : 1,
+        idx: type === 0 ? 5 : 1,
       },
       {
         coupleId: coupleId,
         name: userInfos.user + "'s Goal account",
-        owner: null,
+        owner: userInfos.id,
         currentValue: 0,
         date: Date.now(),
         isGoal: true,
@@ -128,7 +131,20 @@ function FirstStepPage(): JSX.Element {
         startValue: 0,
         type: 5,
         id: accountUUIDs[2],
-        idx: type === 0 ? 5 : 2,
+        idx: type === 0 ? 6 : 2,
+      },
+      {
+        coupleId: coupleId,
+        name: userInfos.user + "'s Shared account",
+        owner: true,
+        currentValue: 0,
+        date: Date.now(),
+        isGoal: true,
+        isPrivate: false,
+        startValue: 0,
+        type: 5,
+        id: accountUUIDs[2],
+        idx: type === 0 ? 7 : 3,
       },
     ];
     let err = false;
@@ -151,7 +167,7 @@ function FirstStepPage(): JSX.Element {
       {
         coupleId: coupleId,
         name: 'General',
-        owner: null,
+        owner: false,
         currentValue: 0,
         isPrivate: false,
         parentId: 0,
@@ -161,7 +177,7 @@ function FirstStepPage(): JSX.Element {
       {
         coupleId: coupleId,
         name: 'Food',
-        owner: null,
+        owner: false,
         currentValue: 0,
         isPrivate: false,
         id: categoryUUIDs[1],
@@ -171,7 +187,7 @@ function FirstStepPage(): JSX.Element {
       {
         coupleId: coupleId,
         name: 'Transport',
-        owner: null,
+        owner: false,
         currentValue: 0,
         isPrivate: false,
         id: categoryUUIDs[2],
@@ -181,7 +197,7 @@ function FirstStepPage(): JSX.Element {
       {
         coupleId: coupleId,
         name: 'Finance',
-        owner: null,
+        owner: false,
         currentValue: 0,
         isPrivate: false,
         id: categoryUUIDs[3],
@@ -191,7 +207,7 @@ function FirstStepPage(): JSX.Element {
       {
         coupleId: coupleId,
         name: 'Travel',
-        owner: null,
+        owner: false,
         currentValue: 0,
         isPrivate: false,
         parentId: 0,
@@ -201,7 +217,7 @@ function FirstStepPage(): JSX.Element {
       {
         coupleId: coupleId,
         name: 'Utilities',
-        owner: null,
+        owner: false,
         currentValue: 0,
         isPrivate: false,
         id: categoryUUIDs[5],
@@ -211,7 +227,7 @@ function FirstStepPage(): JSX.Element {
       {
         coupleId: coupleId,
         name: 'Shopping',
-        owner: null,
+        owner: false,
         currentValue: 0,
         id: categoryUUIDs[6],
         isPrivate: false,
@@ -221,7 +237,7 @@ function FirstStepPage(): JSX.Element {
       {
         coupleId: coupleId,
         name: 'Personal',
-        owner: null,
+        owner: false,
         currentValue: 0,
         id: categoryUUIDs[7],
         isPrivate: false,
@@ -241,7 +257,7 @@ function FirstStepPage(): JSX.Element {
       {
         coupleId: coupleId,
         name: 'Dine Out',
-        owner: null,
+        owner: false,
         currentValue: 0,
         isPrivate: false,
         parentId: categoryUUIDs[1],
@@ -251,7 +267,7 @@ function FirstStepPage(): JSX.Element {
       {
         coupleId: coupleId,
         name: 'Breakfast',
-        owner: null,
+        owner: false,
         currentValue: 0,
         isPrivate: false,
         parentId: categoryUUIDs[1],
@@ -261,7 +277,7 @@ function FirstStepPage(): JSX.Element {
       {
         coupleId: coupleId,
         name: 'Lunch',
-        owner: null,
+        owner: false,
         currentValue: 0,
         isPrivate: false,
         parentId: categoryUUIDs[1],
@@ -271,7 +287,7 @@ function FirstStepPage(): JSX.Element {
       {
         coupleId: coupleId,
         name: 'Dinner',
-        owner: null,
+        owner: false,
         currentValue: 0,
         isPrivate: false,
         parentId: categoryUUIDs[1],
@@ -281,7 +297,7 @@ function FirstStepPage(): JSX.Element {
       {
         coupleId: coupleId,
         name: 'Clothes',
-        owner: null,
+        owner: false,
         currentValue: 0,
         isPrivate: false,
         parentId: categoryUUIDs[6],
@@ -291,7 +307,7 @@ function FirstStepPage(): JSX.Element {
       {
         coupleId: coupleId,
         name: 'Hobbies',
-        owner: null,
+        owner: false,
         currentValue: 0,
         isPrivate: false,
         parentId: 7,
@@ -312,6 +328,33 @@ function FirstStepPage(): JSX.Element {
     return !err;
   }
 
+  async function addTags(coupleId: string) {
+    const tagUUIDs = [uuidv4(),uuidv4()]
+    const tags = [
+      {
+        coupleId,
+        name:userInfos.user+"'s Tag",
+        id:tagUUIDs[0]
+      },
+      {
+        coupleId,
+        id:tagUUIDs[1],
+        name:userInfos.user+"'s Second Tag",
+      }
+    ];
+    let err = false;
+    for (let idx = 0; idx < tagUUIDs.length && !err; idx++) {
+      const id = tagUUIDs[idx] || uuidv4();
+      try {
+        await setDoc(doc(db, 'tags', id), tags[idx]);
+      } catch (error) {
+        setToast(2);
+        err = true;
+      }
+    }
+    return !err;
+  }
+
   /** Function to handle creation of coupleId*/
   const handleCreate = async (event: React.SyntheticEvent<Element, Event>) => {
     if (!isLoading) {
@@ -321,6 +364,7 @@ function FirstStepPage(): JSX.Element {
       try {
         await addAccounts(coupleId, 0);
         await addCategories(coupleId);
+        await addTags(coupleId);
 
         await updateDoc(doc(db, 'users', userInfos.id), {
           coupleId: coupleId,
@@ -369,6 +413,7 @@ function FirstStepPage(): JSX.Element {
                 idx: 0,
               });
               await addAccounts(data.coupleId, 1);
+        await addTags(data.coupleId);
               await updateDoc(doc(db, 'couples', data.coupleId), {
                 members: [partnerId, userInfos.id],
               });
