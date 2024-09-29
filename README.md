@@ -1,6 +1,6 @@
 # Coin Cuddles
 
-Mutual financial/budgeting app with your partner!
+The best financial/budgeting app with your partner, family, or friends!
 
 Hide the information you prefer to keep private from your partner,
 
@@ -20,14 +20,14 @@ and achieve your goals together!
 - Expense Splitting and Sharing:
 
   - Create a feature that calculates the fair share for each partner for shared expenses.
-  - Allow partners to easily split bills, record shared transactions, and see how much each partner owes or is owed.
+  - Allow partners to split bills easily, record shared transactions, and see how much each partner owes or is owed.
 
 - Private Expense Tracking and budgeting:
 
   - Ensure that private expenses are only visible to the individual partner and not shared with the other partner.
   - Implement strong privacy controls that allow partners to choose which financial information they want to share and which to keep private.
-  - Private budgets, accounts, goals, transaction, subscription!
-  - Simplify your financial management with a single app that handles both private and personal expenses seamlessly!
+  - Private budgets, accounts, goals, transactions, subscriptions!
+  - Simplify your financial management with a single app that seamlessly handles private and personal expenses!
 
 ## Built With
 
